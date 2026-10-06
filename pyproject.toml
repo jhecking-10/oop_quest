@@ -1,0 +1,19 @@
+[project]
+name = "oop-quest"
+version = "0.1.0"
+description = "A simple fantasy RPG written in Python"
+readme = "README.md"
+authors = [
+    { name = "James Hecking", email = "jhecking_10@protonmail.com" }
+]
+requires-python = ">=3.13.15"
+dependencies = [
+    "pygame>=2.6.1",
+]
+
+[project.scripts]
+oop-quest = "oop_quest:main"
+
+[build-system]
+requires = ["uv_build>=0.12.19,<0.13.0"]
+build-backend = "uv_build"
