@@ -10,6 +10,14 @@ def main():
     clock = pygame.time.Clock()
     running = True
     dt = 0
+    
+    # load assets
+    background = pygame.image.load("assets/backgrounds/simple_bg.png")
+    player = pygame.transform.scale(
+        pygame.image.load("assets/sprites/simple_guy.png"), 
+        (150,150),
+    )
+    
     # determine starting position on screen
     player_pos = pygame.Vector2(
         screen.get_width() / 2,
@@ -26,13 +34,12 @@ def main():
                 running = False
                 print("Game terminating...\nGoodbye")
         
-        # fills screen to wipe away last frame        
-        screen.fill("purple")
+        # fill screen       
+        screen.fill("white")
+        screen.blit(background, (0, 0))
 
-        # render game between filling the
-        # screen and flipping the display
-        pygame.draw.circle(screen, "black", player_pos, 20)
-
+        # render game
+        screen.blit(player, player_pos)
         keys = pygame.key.get_pressed()
         if keys[pygame.K_w]:
             player_pos.y -= 300 * dt
@@ -43,7 +50,7 @@ def main():
         if keys[pygame.K_d]:
             player_pos.x += 300 * dt
 
-        # puts game on screen
+        # flip screen
         pygame.display.flip()
         
         # limit framerate
