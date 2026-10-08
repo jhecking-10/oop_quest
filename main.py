@@ -1,22 +1,27 @@
 import pygame
 
 from characters import *
+from constants import SCREEN_HEIGHT, SCREEN_WIDTH
 
 
 def main():
-    # basic pygame setup according to docs
+    # pygame setup
     pygame.init()
-    screen = pygame.display.set_mode((640, 360))
+    screen = pygame.display.set_mode(
+        (SCREEN_WIDTH, SCREEN_HEIGHT),
+        pygame.SCALED,
+    ) # returns scaled surface object
+    pygame.display.set_caption("OOP Quest")
     clock = pygame.time.Clock()
     running = True
     dt = 0
     
     # load assets
-    background = pygame.image.load("assets/backgrounds/simple_bg.png")
-    player = pygame.transform.scale(
-        pygame.image.load("assets/sprites/simple_guy.png"), 
-        (150,150),
-    )
+    background = pygame.image.load("assets/backgrounds/simple_back.png")
+    player_sprite = pygame.image.load(
+        "assets/sprites/simple_wizard.png"
+    ).convert_alpha() # convert pixel format for performance optimization
+    player = pygame.transform.scale_by(player_sprite, 2) # double size
     
     # determine starting position on screen
     player_pos = pygame.Vector2(
@@ -35,7 +40,7 @@ def main():
                 print("Game terminating...\nGoodbye")
         
         # fill screen       
-        screen.fill("white")
+        screen.fill("#ffffff") # hexadecimal white
         screen.blit(background, (0, 0))
 
         # render game
