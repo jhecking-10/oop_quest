@@ -12,3 +12,4 @@ wheels/
 # Other
 test.py
 assets
+.python-version

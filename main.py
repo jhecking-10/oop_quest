@@ -4,17 +4,40 @@ from characters import *
 from constants import SCREEN_HEIGHT, SCREEN_WIDTH
 
 
-def main():
-    # pygame setup
+def inititalize():
     pygame.init()
-    screen = pygame.display.set_mode(
-        (SCREEN_WIDTH, SCREEN_HEIGHT),
-        pygame.SCALED,
-    ) # returns scaled surface object
-    pygame.display.set_caption("OOP Quest")
     clock = pygame.time.Clock()
     running = True
     dt = 0
+    return clock, running, dt
+
+def create_screen():
+    screen = pygame.display.set_mode(
+        (SCREEN_WIDTH, SCREEN_HEIGHT),
+        pygame.SCALED,
+        vsync=1,
+    )
+    pygame.display.set_caption("OOP Quest")
+    return screen
+
+def fill_screen(screen, background):
+    screen.fill("#ffffff")
+    screen.blit(background, (0, 0))
+
+def set_controls(pos, spd, dt):
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_w]:
+        pos.y -= spd * dt
+    if keys[pygame.K_s]:
+        pos.y += spd * dt
+    if keys[pygame.K_a]:
+        pos.x -= spd * dt
+    if keys[pygame.K_d]:
+        pos.x += spd * dt
+
+def main():
+    clock, running, dt = inititalize()
+    screen = create_screen()
     
     # load assets
     background = pygame.image.load("assets/backgrounds/simple_back.png")
@@ -40,20 +63,11 @@ def main():
                 print("Game terminating...\nGoodbye")
         
         # fill screen       
-        screen.fill("#ffffff") # hexadecimal white
-        screen.blit(background, (0, 0))
+        fill_screen(screen, background)
 
         # render game
+        set_controls(player_pos, 150, dt)
         screen.blit(player, player_pos)
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_w]:
-            player_pos.y -= 300 * dt
-        if keys[pygame.K_s]:
-            player_pos.y += 300 * dt
-        if keys[pygame.K_a]:
-            player_pos.x -= 300 * dt
-        if keys[pygame.K_d]:
-            player_pos.x += 300 * dt
 
         # flip screen
         pygame.display.flip()
